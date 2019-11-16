@@ -8,11 +8,11 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from UI import Ui_MainWindow
 
 
-class MainWindow(QMainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.need_draw = False
         self.btn.clicked.connect(self.clicked_b)
 
@@ -25,7 +25,7 @@ class MainWindow(QMainWindow):
         if not self.need_draw:
             return
         qp.begin(self)
-        qp.setPen(QColor(255, 255, 0))
+        qp.setPen(QColor(randint(0, 255), randint(0, 255), randint(0, 255)))
         r = randint(1, 100)
         x = randint(1, 300)
         y = randint(1, 300)
