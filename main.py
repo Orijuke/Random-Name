@@ -15,6 +15,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.need_draw = False
         self.btn.clicked.connect(self.clicked_b)
+        self.circle = [0, 0, 0, QColor(0, 0, 0)]
 
     def clicked_b(self):
         self.need_draw = True
@@ -22,14 +23,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def paintEvent(self, event):
         qp = QPainter()
-        if not self.need_draw:
-            return
         qp.begin(self)
-        qp.setPen(QColor(randint(0, 255), randint(0, 255), randint(0, 255)))
-        r = randint(1, 100)
-        x = randint(1, 300)
-        y = randint(1, 300)
-        qp.drawEllipse(x, y, r, r)
+        if self.need_draw:
+            color = QColor(randint(0, 255), randint(0, 255), randint(0, 255))
+            self.circle[3] = color
+            r = randint(1, 100)
+            self.circle[0] = r
+            x = randint(1, 300)
+            y = randint(1, 300)
+            self.circle[1], self.circle[2] = x, y
+        qp.setPen(self.circle[3])
+        qp.drawEllipse(self.circle[1], self.circle[2], self.circle[0], self.circle[0])
         qp.end()
         self.need_draw = False
 
